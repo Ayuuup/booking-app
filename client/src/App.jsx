@@ -12,11 +12,11 @@ function App() {
         </svg>
         <span className='font-bold text-xl'>airbnc</span>         
         </a>
-        <div className='flex border border-gray-300 rounded-full py-2 px-4 gap-2 shadow-md shadow-gray-500'>
+        <div className='flex items-center border border-gray-300 rounded-full py-2 px-4 gap-2 shadow-md shadow-gray-500'>
           <div>Anywhere</div>
-          <div className='border'></div>
+          <div className='border h-full'></div>
           <div>Any week</div>
-          <div className='border'></div>
+          <div className='border h-full'></div>
           <div>Add guests</div>
           <button className='bg-primary text-white rounded-full p-1'>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
