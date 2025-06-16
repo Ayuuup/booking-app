@@ -1,5 +1,8 @@
 const express = require("express")
 const cors = require("cors")
+const mongoose = require("mongoose")
+const User = require("./models/User")
+const bcrypt = require("bcryptjs")
 
 const app = express()
 
@@ -11,12 +14,24 @@ app.use(cors({
 // parse json upon requests
 app.use(express.json())
 
+//load  config from env file
+require("dotenv").config()
+//mongodb connection
+mongoose.connect(process.env.MONGO_URL)
+
+//pass secret
+
 app.get("/test",(req,res)=>{
     res.json('test ok')
 })
 
 app.post("/register", (req,res)=>{
     const {name,email,password} =  req.body
+    User.create({
+        name,
+        email,
+        password
+    })
     res.json({name,email,password})
 })
 
