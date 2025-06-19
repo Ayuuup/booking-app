@@ -18,6 +18,8 @@ const RegisterPage = () => {
         password
       })
 
+      alert("registration successful")
+
 
     }
 

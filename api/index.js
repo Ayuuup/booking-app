@@ -3,6 +3,8 @@ const cors = require("cors")
 const mongoose = require("mongoose")
 const User = require("./models/User")
 const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
+const jwtSecret = "ayoub"
 
 const app = express()
 
@@ -40,6 +42,27 @@ app.post("/register",async (req,res)=>{
         res.status(422).json(e)
     }
     
+})
+
+app.post('/login',async(req,res)=>{
+    const {email,password} = req.body
+    const userDoc = await User.findOne({email})
+    if(userDoc) {
+        if(password==userDoc.password){
+            jwt.sign({email:userDoc.email,id:userDoc._id,},jwtSecret,{},(err,token)=>{
+                if(err) throw err
+                res.cookie('token',token).json("password ok")
+            })
+            
+        }
+        else{
+            res.status(422).json("pass not okay")
+        }
+    }
+    else {
+        res.json("user not found")
+    }
+
 })
 
 
