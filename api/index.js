@@ -25,14 +25,21 @@ app.get("/test",(req,res)=>{
     res.json('test ok')
 })
 
-app.post("/register", (req,res)=>{
+app.post("/register",async (req,res)=>{
     const {name,email,password} =  req.body
-    User.create({
-        name,
-        email,
-        password
-    })
-    res.json({name,email,password})
+    try{
+        const userDoc = await User.create({
+            name,
+            email,
+            password
+        })
+        res.json(userDoc)
+    }
+
+    catch(e) {
+        res.status(422).json(e)
+    }
+    
 })
 
 

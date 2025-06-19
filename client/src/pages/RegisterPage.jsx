@@ -8,13 +8,24 @@ const RegisterPage = () => {
   const [password,setPassword] = useState('')
 
   //function to be executed when register button is clicked
-  function registerUser(ev){
+  async function registerUser(ev){
     ev.preventDefault()
-    axios.post("/register",{
-      name,
-      email,
-      password
-    })
+
+    try{
+      await axios.post("/register",{
+        name,
+        email,
+        password
+      })
+
+
+    }
+
+    catch(e){
+      alert("Registration failed , please try later")
+
+    }
+    
   }
   return (
     <div className='mt-4 grow flex items-center justify-center'>
