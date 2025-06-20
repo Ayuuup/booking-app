@@ -1,24 +1,28 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
+import { userContext } from '../UserContext'
 
 const LoginPage = () => {
 
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
   const [redirect,setRedirect] = useState(false)
+  const {setUser} = useContext(userContext)
 
   async function handleLogin(ev){
     ev.preventDefault()
     try {
-      await axios.post('/login',{
+      const {data} = await axios.post('/login',{
         email,
         password
       })
+      setUser(data)
       alert('login successful')
       setRedirect(true)
     }
     catch(e){
+      console.log(e)
       alert("login failed")
 
     }
