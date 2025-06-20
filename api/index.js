@@ -5,16 +5,20 @@ const User = require("./models/User")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const jwtSecret = "ayoub"
+const cookieParser = require("cookie-parser")
 
 const app = express()
 
 //enable api calls from this origin 
 app.use(cors({
     credentials:true,
-    origin:'http://localhost:5173'
+    origin:'http://127.0.0.1:5173'
 }))
 // parse json upon requests
 app.use(express.json())
+
+// used to be able to read cookie from req object
+app.use(cookieParser())
 
 //load  config from env file
 require("dotenv").config()
@@ -63,6 +67,17 @@ app.post('/login',async(req,res)=>{
         res.json("user not found")
     }
 
+})
+
+app.get("/profile",(req,res)=>{
+    const {token} = req.cookies
+    if (token) {
+        jwt.verify(token,jwtSecret,{},async(err,userData)=>{
+            if (err) throw err
+            const {name,email,_id} = await User.findById(userData.id)
+            res.json({name,email,_id})
+        })
+    }
 })
 
 
